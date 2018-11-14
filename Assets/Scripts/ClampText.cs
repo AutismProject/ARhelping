@@ -9,11 +9,13 @@ public class ClampText : MonoBehaviour,ITrackableEventHandler{
     public Text nameLabel;
     private TrackableBehaviour mTrackableBehaviour;
     public Vector3 vectorForUp;
+    private AudioSource AudioS;
 
     private bool mShowText = false;
 
     void Start()
     {
+        AudioS = GetComponent<AudioSource>();
         mTrackableBehaviour = GetComponent<TrackableBehaviour>();
         if (mTrackableBehaviour)
         {
@@ -37,15 +39,20 @@ public class ClampText : MonoBehaviour,ITrackableEventHandler{
            newStatus == TrackableBehaviour.Status.TRACKED)
         {
             mShowText = true;
+            AudioS.Play();
         }
         else
         {
             mShowText = false;
+            AudioS.Stop();
         }
     }
     public void CheckOnEnable()
     {
-        if (mShowText) nameLabel.gameObject.SetActive(true);
+        if (mShowText)
+        {
+            nameLabel.gameObject.SetActive(true);
+        }
         else nameLabel.gameObject.SetActive(false);
     }
 }
